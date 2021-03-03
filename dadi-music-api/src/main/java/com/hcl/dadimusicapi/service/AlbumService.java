@@ -16,17 +16,17 @@ public class AlbumService {
   private AlbumRepo albumRepo;
 
   public List<Album> getAll() {
-    log.debug("Getting all albums");
+    log.debug("Get all albums");
     return albumRepo.findAll();
   }
 
   public Album findById(int id) {
-    log.debug("Finding album with id: " + id);
+    log.debug("Find album with id: " + id);
     return albumRepo.findById(id).orElseThrow(() -> new NotFoundException("Album not found!"));
   }
 
   public Album add(Album album) {
-    log.debug("Adding album: " + album);
+    log.debug("Add an album: " + album);
     return albumRepo.save(album);
   }
 
