@@ -1,8 +1,6 @@
 package com.hcl.dadimusicapi.model;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 import lombok.Data;
 @Entity
@@ -10,6 +8,7 @@ import lombok.Data;
 public class Song {
 	
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	int id;
 	String name;
 	@ManyToOne
