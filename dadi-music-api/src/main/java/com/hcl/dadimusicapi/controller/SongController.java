@@ -30,8 +30,8 @@ public class SongController {
 
   @ApiOperation(value = "Get a song by id", response = Song.class)
   @GetMapping("/{id}")
-  public List<Song> get(@PathVariable int id) {
-    return songService.getAll();
+  public Song get(@PathVariable int id) {
+    return songService.findById(id);
   }
 
   @ApiOperation(value = "Get songs with album id", response = List.class)
