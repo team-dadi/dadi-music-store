@@ -2,7 +2,6 @@ package com.hcl.dadimusicwebapp.controller;
 
 import com.hcl.dadimusicwebapp.model.Album;
 import com.hcl.dadimusicwebapp.model.Artist;
-import com.hcl.dadimusicwebapp.model.Genre;
 import com.hcl.dadimusicwebapp.model.Song;
 import com.hcl.dadimusicwebapp.service.AlbumService;
 import com.hcl.dadimusicwebapp.service.ArtistService;
@@ -14,7 +13,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
@@ -36,7 +34,7 @@ public class ShopController {
   @Autowired
   private ArtistService artistService;
 
-  @GetMapping("/home")
+  @GetMapping("/")
   public String index(ModelMap model) {
     model.addAttribute("genreList", genreService.getAll());
     return "index";
@@ -50,8 +48,8 @@ public class ShopController {
     return "search";
   }
 
-  @GetMapping("/search")
-  public String searchByAlbum(@RequestParam String albumName, ModelMap model) {
+  @GetMapping("/search/album")
+  public String searchByAlbum(@RequestParam("albumName") String albumName, ModelMap model) {
     List<Album> albumList = albumService.getAll();
     List<Song> songList = new ArrayList<Song>();
     albumList.forEach(a -> {
@@ -63,8 +61,8 @@ public class ShopController {
     return "search";
   }
 
-  @GetMapping("/search")
-  public String searchByArtist(@RequestParam String artistName, ModelMap model) {
+  @GetMapping("/search/artist")
+  public String searchByArtist(@RequestParam("artistName") String artistName, ModelMap model) {
     List<Artist> artistList = artistService.getAll();
     List<Song> songList = new ArrayList<Song>();
     artistList.forEach(a -> {
@@ -76,8 +74,8 @@ public class ShopController {
     return "search";
   }
 
-  @GetMapping("/search")
-  public String searchByTitle(@RequestParam String songName, ModelMap model) {
+  @GetMapping("/search/title")
+  public String searchByTitle(@RequestParam("songName") String songName, ModelMap model) {
     List<Song> allSongs = songService.getAll();
     List<Song> songList = allSongs.stream().filter(
       s -> s.getName().contains(songName))
@@ -86,7 +84,7 @@ public class ShopController {
     return "search";
   }
 
-  @GetMapping("/search?genreId={genreId}")
+  @GetMapping("/search/genre/{genreId}")
   public String searchByGenre(@PathVariable int genreId, ModelMap model) {
     List<Song> allSongs = songService.getAll();
     List<Song> songList = allSongs.stream().filter(
