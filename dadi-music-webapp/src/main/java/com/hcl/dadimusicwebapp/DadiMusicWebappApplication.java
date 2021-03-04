@@ -2,6 +2,9 @@ package com.hcl.dadimusicwebapp;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.context.annotation.Bean;
+import org.springframework.web.client.RestTemplate;
 
 @SpringBootApplication
 public class DadiMusicWebappApplication {
@@ -10,4 +13,8 @@ public class DadiMusicWebappApplication {
 		SpringApplication.run(DadiMusicWebappApplication.class, args);
 	}
 
+	@Bean
+	public RestTemplate restTemplate(RestTemplateBuilder builder) {
+		return builder.build();
+	}
 }
