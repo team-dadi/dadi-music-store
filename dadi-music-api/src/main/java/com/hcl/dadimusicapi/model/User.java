@@ -1,9 +1,6 @@
 package com.hcl.dadimusicapi.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,5 +15,7 @@ public class User {
     private String role;
     private String password;
     private String email;
+    @OneToOne
+    Cart cart;
    
 }

@@ -34,7 +34,7 @@ mvn spring-boot:run
 ```
 
 ## Usage
-API documentation: [http://localhost:8080/swagger-ui.html](http://localhost:8080/swagger-ui.html)
+API documentation: [http://localhost:8081/swagger-ui.html](http://localhost:8081/swagger-ui.html)
 
 ## Stopping
 

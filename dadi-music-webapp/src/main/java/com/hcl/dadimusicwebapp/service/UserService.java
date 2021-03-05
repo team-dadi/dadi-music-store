@@ -28,11 +28,6 @@ public class UserService {
 
 	@Autowired
 	private RestTemplate restTemplate;
-	
-	@Bean
-	public RestTemplate restTemplate() {
-	    return new RestTemplate();
-	}
 
 	public User findByUsername(String username) {
 		String url = findUrl + username;
