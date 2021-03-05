@@ -42,7 +42,7 @@ public class UserService {
 		user.setUsername(account.getUsername());
 		user.setPassword(bCryptPasswordEncorder.encode(account.getPassword()));
 		user.setEmail(account.getEmail());
-		user.setRole("USER");
+		user.setRole("ROLE_USER");
 
 		log.debug("Sending post request to " + addUrl + " to add user: " + user);
 
