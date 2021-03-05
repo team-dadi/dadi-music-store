@@ -1,8 +1,5 @@
 package com.hcl.dadimusicwebapp.controller;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.type.CollectionType;
 import com.hcl.dadimusicwebapp.model.Album;
 import com.hcl.dadimusicwebapp.model.Artist;
 import com.hcl.dadimusicwebapp.model.Song;
@@ -15,11 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -58,7 +52,7 @@ public class ShopController {
     } else if(songName != null) {
       songList.addAll(searchByTitle(songName));
     } else if(artistName != null) {
-      songList.addAll(searchByArtist(songName));
+      songList.addAll(searchByArtist(artistName));
     } else if(genreId != null) {
       songList.addAll(searchByGenre(Integer.parseInt(genreId)));
     }
@@ -79,7 +73,7 @@ public class ShopController {
     List<Song> songList = new ArrayList<Song>();
 
     albumList.forEach(a -> {
-      if(a.getName().contains(albumName)) {
+      if(a.getName().toLowerCase().contains(albumName.toLowerCase())) {
         songList.addAll(songService.getByAlbumId(a.getId()));
       }
     } );
@@ -91,7 +85,7 @@ public class ShopController {
     List<Artist> artistList = artistService.getAll();
     List<Song> songList = new ArrayList<Song>();
     artistList.forEach(a -> {
-      if(a.getName().contains(artistName)) {
+      if(a.getName().toLowerCase().contains(artistName.toLowerCase())) {
         songList.addAll(songService.getByArtistId(a.getId()));
       }
     } );
@@ -102,7 +96,7 @@ public class ShopController {
   private List<Song> searchByTitle(String songName) {
     List<Song> allSongs = songService.getAll();
     List<Song> songList = allSongs.stream().filter(
-      s -> s.getName().contains(songName))
+      s -> s.getName().toLowerCase().contains(songName.toLowerCase()))
       .collect(Collectors.toList());
 
     return songList;
