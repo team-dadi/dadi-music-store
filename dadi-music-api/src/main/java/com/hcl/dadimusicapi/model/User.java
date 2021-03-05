@@ -22,6 +22,6 @@ public class User {
 	Cart cart;
 
 	@OneToMany
-	List<Order> orders;
+	List<Invoice> invoices;
 
 }
