@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+
+<head>
+    <title id="pageTitle">DADI's Music Store</title>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <style>
+        label {
+            color: white;
+            padding-right: 5px;
+        }
+    </style>
+</head>
+
+<body class="text-left" style="background-color: #333333;">
+    <div class="container-fluid" style="background-color: #33FFBB;">
+        <div class="text-center" style="margin-bottom: 5px; padding-top: 10px; padding-bottom: 10px;">
+            <h1 style="font-weight: bold;">Admin Page</h1>
+        </div>
+    </div>
+    <div>
+        <nav class="navbar navbar-expand-sm bg-secondary navbar-dark">
+            <ul class="navbar-nav">
+                <li class="nav-item active">
+                    <a class="nav-link" href="/home">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/search">Search</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/cart">Cart</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+    <div>
+        <h4 style="color: white; font-family: cursive; padding-top: 10px; padding-bottom: 50px;"></h4>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md">
+                <label for="genreInput">Enter New Genre</label>
+                <input type="text" id="genreInput">
+                <button>Add Genre</button>
+                <br>
+
+                <label for="Album">Enter New Album</label>
+                <input type="text" id="albumInput">
+                <button>Add Album</button>
+                <br>
+
+                <label for="Artist">Enter New Artist</label>
+                <input type="text" id="artistInput">
+                <button>Add Artist</button>
+                <br>
+            </div>
+            <div class="col-md">
+                <label for="genreInput">Add A New Song</label> <br>
+                <input type="text" id="genreInput">
+                <select th:field="*{albumList}">
+                    <option value="">Select Album</option>
+                    <option th:each="country : ${albumList}" th:value="${alum.id}" th:text="${album.name}"></option>
+                </select>
+                <select th:field="*{artistList}">
+                    <option value="">Select Artist</option>
+                    <option th:each="country : ${artistList}" th:value="${artist.id}" th:text="${artist.name}"></option>
+                </select>
+                <select th:field="*{genreList}">
+                    <option value="">Select Genre</option>
+                    <option th:each="country : ${genreList}" th:value="${genre.id}" th:text="${genre.name}"></option>
+                </select>
+                <button>Add Song</button>
+            </div>
+        </div>
+
+    </div>
+    </div>
+</body>
+
+</html>
