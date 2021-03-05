@@ -1,5 +1,8 @@
 package com.hcl.dadimusicwebapp.service;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.hcl.dadimusicwebapp.model.Album;
 import com.hcl.dadimusicwebapp.model.Song;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +24,9 @@ public class SongService {
   public List<Song> getAll() {
     String getAllUrl = url + "/all";
     log.debug("Sending get request to: " + getAllUrl);
-    List<Song> songList = restTemplate.getForObject(getAllUrl, List.class);
+    List<Song> songList = new ObjectMapper().convertValue(
+      restTemplate.getForObject(getAllUrl, List.class),
+      new TypeReference<List<Song>>() { });
     return songList;
   }
 
@@ -34,7 +39,9 @@ public class SongService {
   public List<Song> getByAlbumId(int id) {
     String getByAlbumUrl = url + "/album/" + id;
     log.debug("Sending get request to: " + getByAlbumUrl);
-    List<Song> songList = restTemplate.getForObject(getByAlbumUrl, List.class);
+    List<Song> songList = new ObjectMapper().convertValue(
+      restTemplate.getForObject(getByAlbumUrl, List.class),
+      new TypeReference<List<Song>>() { });
     return songList;
   }
 
@@ -52,5 +59,14 @@ public class SongService {
     String deleteUrl = url + "/" + id;
     log.debug("Sending delete request to: " + deleteUrl);
     restTemplate.delete(deleteUrl);
+  }
+
+  public List<Song> getByArtistId(int id) {
+    String getByArtistUrl = url + "/artist/" + id;
+    log.debug("Sending get request to: " + getByArtistUrl);
+    List<Song> songList = new ObjectMapper().convertValue(
+      restTemplate.getForObject(getByArtistUrl, List.class),
+      new TypeReference<List<Song>>() { });
+    return songList;
   }
 }

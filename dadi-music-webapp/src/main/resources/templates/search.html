@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+  <script>
+    function titleSearch() {
+      document.getElementById("searchInput").setAttribute("name", "songName") }
+    function albumSearch() {
+      document.getElementById("searchInput").setAttribute("name", "albumName") }
+    function artistSearch() {
+      document.getElementById("searchInput").setAttribute("name", "artistName") }
+  </script>
+  <title id="pageTitle">Search Page</title>
+</head>
+<body class="text-left">
+<main class="form-search">
+  <h1 class="mb-3 text-center">Search For a Song</h1>
+  <div class="container">
+    <div class="content">
+      <label>Search for a song</label><br>
+
+      <form th:action="@{/search}">
+        <input type="text" id="searchInput" th:value="${searchInput}"/>
+        <input type="submit" onclick="albumSearch()" value="Album">
+        <input type="submit" onclick="titleSearch()" value="Title">
+        <input type="submit" onclick="artistSearch()" value="Artist">
+      </form>
+
+    </div>
+    <div th:if="${genreList != null}">
+      <h1>Genre:</h1>
+      <table>
+        <tr th:each="genre : ${genreList}">
+          <td>
+            <form th:action="@{/search}">
+              <input type="hidden" id="genreInput" name="genreId" th:value="${genre.id}"/>
+              <input type="submit" th:value="${genre.name}">
+            </form>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+  <div>
+    <table>
+      <tr>
+        <td>Title</td>
+        <td>Album</td>
+        <td>Genre</td>
+        <td>Artist</td>
+        <td>Add to Cart</td>
+      </tr>
+      <tr th:each="song : ${songList}">
+        <td th:text="${song.name}"></td>
+        <td th:text="${song.album.name}"></td>
+        <td th:text="${song.genre.name}"></td>
+        <td th:text="${song.artist.name}"></td>
+        <td><button value=${song.id}>Add</button></td>
+      </tr>
+    </table>
+  </div>
+</main>
+</body>
+</html>

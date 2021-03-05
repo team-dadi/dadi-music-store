@@ -1,6 +1,10 @@
 package com.hcl.dadimusicwebapp.service;
 
 import java.util.List;
+
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.hcl.dadimusicwebapp.model.Album;
 import lombok.extern.log4j.Log4j2;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +28,9 @@ public class GenreService {
   public List<Genre> getAll() {
     String getAllUrl = url + "/all";
     log.debug("Sending get request to: " + getAllUrl);
-    List<Genre> genreList = restTemplate.getForObject(getAllUrl, List.class);
+    List<Genre> genreList = new ObjectMapper().convertValue(
+      restTemplate.getForObject(getAllUrl, List.class),
+      new TypeReference<List<Genre>>() { });
     return genreList;
   }
 

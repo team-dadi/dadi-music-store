@@ -3,8 +3,8 @@ version: '3.7'
 services:
   db:
     build:
-      context: ../docker/
-      dockerfile: mysql.dockerfile
+      context: ../sql-scripts/
+      dockerfile: ../docker/mysql.dockerfile
     image: db
     container_name: db
     restart: always
