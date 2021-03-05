@@ -1,5 +1,6 @@
 package com.hcl.dadimusicapi.controller;
 
+import com.hcl.dadimusicapi.exception.InvalidDataException;
 import com.hcl.dadimusicapi.exception.NotFoundException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -15,5 +16,10 @@ public class ExceptionController extends ResponseEntityExceptionHandler {
   protected ResponseEntity<Object> handleNotFound(Exception ex, WebRequest request) {
     return handleExceptionInternal(ex, ex.getMessage(),
       new HttpHeaders(), HttpStatus.NOT_FOUND, request);
+  }
+  @ExceptionHandler({ InvalidDataException.class })
+  public ResponseEntity<Object> handleInvalidData(Exception ex, WebRequest request) {
+    return handleExceptionInternal(ex, ex.getMessage(),
+      new HttpHeaders(), HttpStatus.valueOf(422), request);
   }
 }
