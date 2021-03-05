@@ -30,7 +30,7 @@ public class RegisterController {
       model.addAttribute("usernameAlert", "Username already taken!");
       return "register";
     }
-    accountInput.setRole("USER");
+
     userService.addUser(accountInput);
 
     attributes.addFlashAttribute("registerAlert", "Registration Successful!");
