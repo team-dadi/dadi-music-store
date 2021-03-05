@@ -66,15 +66,15 @@
                 <input type="text" id="genreInput">
                 <select th:field="*{albumList}">
                     <option value="">Select Album</option>
-                    <option th:each="country : ${albumList}" th:value="${alum.id}" th:text="${album.name}"></option>
+                    <option th:each="album : ${albumList}" th:value="${album.id}" th:text="${album.name}"></option>
                 </select>
                 <select th:field="*{artistList}">
                     <option value="">Select Artist</option>
-                    <option th:each="country : ${artistList}" th:value="${artist.id}" th:text="${artist.name}"></option>
+                    <option th:each="artist : ${artistList}" th:value="${artist.id}" th:text="${artist.name}"></option>
                 </select>
                 <select th:field="*{genreList}">
                     <option value="">Select Genre</option>
-                    <option th:each="country : ${genreList}" th:value="${genre.id}" th:text="${genre.name}"></option>
+                    <option th:each="genre : ${genreList}" th:value="${genre.id}" th:text="${genre.name}"></option>
                 </select>
                 <button>Add Song</button>
             </div>

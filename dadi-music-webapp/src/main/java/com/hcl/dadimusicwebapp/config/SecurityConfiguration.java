@@ -1,4 +1,5 @@
 package com.hcl.dadimusicwebapp.config;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -8,37 +9,45 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
-    @Autowired
-    private UserDetailsService userDetailsService;
-    @Bean
-    public AuthenticationProvider authProvider() {
-        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
-        provider.setUserDetailsService(userDetailsService);
-        provider.setPasswordEncoder(new BCryptPasswordEncoder());
-        return provider;
-    }
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-    	http.authorizeRequests()
-		.antMatchers("/","/search**","/cart","/register").permitAll()
-		.and()
-		.formLogin();
-    	
-		/*
-		 * .loginPage("/login").permitAll() //change as per login page mapping
-		 * .loginProcessingUrl("/welcome") //change as per login form mappin
-		 * .defaultSuccessUrl("/welcome") //page after successfull login..//can redirect
-		 * to custom page if role= admin from controller. .and()
-		 * .logout().logoutSuccessUrl("/").invalidateHttpSession(true)
-		 * .clearAuthentication(true) .and()
-		 * .exceptionHandling().accessDeniedPage("/accessdenied");
-		 */
-    }
-    @Bean
-    public BCryptPasswordEncoder encoder() {
-      return new BCryptPasswordEncoder();
-    }
-    
+  @Autowired
+  private UserDetailsService userDetailsService;
+
+  @Bean
+  public AuthenticationProvider authProvider() {
+    DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
+    provider.setUserDetailsService(userDetailsService);
+    provider.setPasswordEncoder(new BCryptPasswordEncoder());
+    return provider;
+  }
+
+  @Override
+  protected void configure(HttpSecurity http) throws Exception {
+    http.authorizeRequests()
+      .antMatchers("/", "/search**", "/cart", "/register").permitAll()
+        .and()
+      .formLogin()
+        .loginPage("/login")
+        .permitAll()
+        .and()
+      .logout()
+        .permitAll();;
+
+    /*
+     * .loginProcessingUrl("/welcome") //change as per login form mappin
+     * .defaultSuccessUrl("/welcome") //page after successfull login..//can redirect
+     * to custom page if role= admin from controller. .and()
+     * .logout().logoutSuccessUrl("/").invalidateHttpSession(true)
+     * .clearAuthentication(true) .and()
+     * .exceptionHandling().accessDeniedPage("/accessdenied");
+     */
+  }
+
+  @Bean
+  public BCryptPasswordEncoder encoder() {
+    return new BCryptPasswordEncoder();
+  }
+
 }
