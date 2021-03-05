@@ -46,20 +46,28 @@
     <div class="container">
         <div class="row">
             <div class="col-md">
+            	<label for="error" id="error"></label>
+            	
+            <form th:action="@{/add-genre}" method="post">
                 <label for="genreInput">Enter New Genre</label>
-                <input type="text" id="genreInput">
+                <input type="text" id="genreInput" name="genreInput">
                 <button>Add Genre</button>
                 <br>
-
+               </form>
+                
+                <form th:action="@{/add-album}" method="post">
                 <label for="Album">Enter New Album</label>
                 <input type="text" id="albumInput">
                 <button>Add Album</button>
                 <br>
-
+                </form>
+                
+                <form th:action="@{/add-artist}" method="post">
                 <label for="Artist">Enter New Artist</label>
-                <input type="text" id="artistInput">
+                <input type="text" id="artistInput" name="artistInput">
                 <button>Add Artist</button>
                 <br>
+                </form>
             </div>
             <div class="col-md">
                 <label for="genreInput">Add A New Song</label> <br>
