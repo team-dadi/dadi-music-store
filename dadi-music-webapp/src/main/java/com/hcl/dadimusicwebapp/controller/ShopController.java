@@ -1,5 +1,8 @@
 package com.hcl.dadimusicwebapp.controller;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.type.CollectionType;
 import com.hcl.dadimusicwebapp.model.Album;
 import com.hcl.dadimusicwebapp.model.Artist;
 import com.hcl.dadimusicwebapp.model.Song;
@@ -13,8 +16,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -37,60 +42,78 @@ public class ShopController {
   @GetMapping("/")
   public String index(ModelMap model) {
     model.addAttribute("genreList", genreService.getAll());
-    return "index";
+    return "home";
   }
 
   @GetMapping("/search")
-  public String search(ModelMap model) {
-    model.addAttribute("songList", songService.getAll());
-    model.addAttribute("genreList", genreService.getAll());
+  public String searchByAlbum(@RequestParam(required = false) String albumName,
+                              @RequestParam(required = false) String artistName,
+                              @RequestParam(required = false) String songName,
+                              @RequestParam(required = false) String genreId,
+                              ModelMap model) {
+    List<Song> songList = new ArrayList<>();
 
+    if(albumName != null) {
+      songList.addAll(searchByAlbum(albumName));
+    } else if(songName != null) {
+      songList.addAll(searchByTitle(songName));
+    } else if(artistName != null) {
+      songList.addAll(searchByArtist(songName));
+    } else if(genreId != null) {
+      songList.addAll(searchByGenre(Integer.parseInt(genreId)));
+    }
+    else {
+      songList.addAll(songService.getAll());
+    }
+
+    model.addAttribute("songList", songList);
+    model.addAttribute("genreList", genreService.getAll());
     return "search";
   }
 
-  @GetMapping("/search/album")
-  public String searchByAlbum(@RequestParam("albumName") String albumName, ModelMap model) {
+
+  private List<Song> searchByAlbum(String albumName) {
+    log.debug("Searching in albums for: " + albumName);
+
     List<Album> albumList = albumService.getAll();
     List<Song> songList = new ArrayList<Song>();
+
     albumList.forEach(a -> {
       if(a.getName().contains(albumName)) {
         songList.addAll(songService.getByAlbumId(a.getId()));
       }
     } );
-    model.addAttribute("songList", songList);
-    return "search";
+
+    return songList;
   }
 
-  @GetMapping("/search/artist")
-  public String searchByArtist(@RequestParam("artistName") String artistName, ModelMap model) {
+  private List<Song> searchByArtist(String artistName) {
     List<Artist> artistList = artistService.getAll();
     List<Song> songList = new ArrayList<Song>();
     artistList.forEach(a -> {
       if(a.getName().contains(artistName)) {
-        //songList.addAll(songService.getByArtistId(a.getId()));
+        songList.addAll(songService.getByArtistId(a.getId()));
       }
     } );
-    model.addAttribute("songList", songList);
-    return "search";
+
+    return songList;
   }
 
-  @GetMapping("/search/title")
-  public String searchByTitle(@RequestParam("songName") String songName, ModelMap model) {
+  private List<Song> searchByTitle(String songName) {
     List<Song> allSongs = songService.getAll();
     List<Song> songList = allSongs.stream().filter(
       s -> s.getName().contains(songName))
       .collect(Collectors.toList());
-    model.addAttribute("songList", songList);
-    return "search";
+
+    return songList;
   }
 
-  @GetMapping("/search/genre/{genreId}")
-  public String searchByGenre(@PathVariable int genreId, ModelMap model) {
+  public List<Song> searchByGenre(int genreId) {
     List<Song> allSongs = songService.getAll();
     List<Song> songList = allSongs.stream().filter(
       s -> s.getGenre().getId() == genreId)
       .collect(Collectors.toList());
-    model.addAttribute("songList", songList);
-    return "search";
+
+    return songList;
   }
 }

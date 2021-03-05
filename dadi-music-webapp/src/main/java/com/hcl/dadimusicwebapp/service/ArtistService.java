@@ -2,6 +2,9 @@ package com.hcl.dadimusicwebapp.service;
 
 import java.util.List;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.hcl.dadimusicwebapp.model.Album;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -22,7 +25,9 @@ public class ArtistService {
 	public List<Artist> getAll(){
 		String getAllUrl = url+"/all";
 		log.debug("Sending get request to: "+ getAllUrl);
-		List <Artist> artistList= restTemplate.getForObject(getAllUrl, List.class);
+		List<Artist> artistList = new ObjectMapper().convertValue(
+			restTemplate.getForObject(getAllUrl, List.class),
+			new TypeReference<List<Artist>>() { });
 		return artistList;
 	}
 	public Artist getById(int id) {
