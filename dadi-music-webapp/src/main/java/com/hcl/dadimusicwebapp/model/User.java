@@ -1,5 +1,7 @@
 package com.hcl.dadimusicwebapp.model;
 
+import java.util.List;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -12,5 +14,7 @@ public class User {
     private String role;
     private String password;
     private String email;
+    Cart cart;
+    List<Order> orders;
    
 }
