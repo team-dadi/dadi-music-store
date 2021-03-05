@@ -1,62 +1,101 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
-  <script>
-    function titleSearch() {
-      document.getElementById("searchInput").setAttribute("name", "songName") }
-    function albumSearch() {
-      document.getElementById("searchInput").setAttribute("name", "albumName") }
-    function artistSearch() {
-      document.getElementById("searchInput").setAttribute("name", "artistName") }
-  </script>
-  <title id="pageTitle">Search Page</title>
+<script>
+  function titleSearch() {
+    document.getElementById("searchInput").setAttribute("name", "songName")
+  }
+  function albumSearch() {
+    document.getElementById("searchInput").setAttribute("name", "albumName")
+  }
+  function artistSearch() {
+    document.getElementById("searchInput").setAttribute("name", "artistName")
+  }
+</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<title id="pageTitle">Search Page</title>
+
+<style>
+  font {
+    color: white;
+  }
+</style>
+
 </head>
-<body class="text-left">
-<main class="form-search">
-  <h1 class="mb-3 text-center">Search For a Song</h1>
-  <div class="container">
-    <div class="content">
-      <label>Search for a song</label><br>
 
-      <form th:action="@{/search}">
-        <input type="text" id="searchInput" th:value="${searchInput}"/>
-        <input type="submit" onclick="albumSearch()" value="Album">
-        <input type="submit" onclick="titleSearch()" value="Title">
-        <input type="submit" onclick="artistSearch()" value="Artist">
-      </form>
-
+<body class="text-left" style="background-color: #333333;">
+  <div class="container-fluid" style="background-color: #33FFBB;">
+      <div class="text-center" style="margin-bottom: 5px; padding-top: 10px; padding-bottom: 10px;">
+          <h1>Search A SONG Page</h1>
+      </div>
+  </div>
+  <div>
+      <nav class="navbar navbar-expand-sm bg-secondary navbar-dark">
+          <ul class="navbar-nav">
+              <li class="nav-item active">
+                  <a class="nav-link" href="/home">Search</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="/login">Login</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="/cart">Cart</a>
+              </li>
+          </ul>
+      </nav>
+  </div>
+    <h1 class="mb-3 text-center"><font>Music Search Page</font></h1>
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <label><font>Search for a song</font></label><br>
+          <form th:action="@{/search}">
+            <input type="text" id="searchInput" th:value="${searchInput}" />
+            <input type="submit" onclick="albumSearch()" value="Album">
+            <input type="submit" onclick="titleSearch()" value="Title">
+            <input type="submit" onclick="artistSearch()" value="Artist">
+          </form>
+        </div>
+        <div class="col">
+          <div th:if="${genreList != null}">
+            <label><font>Genre:</font></label>
+            <table>
+              <tr th:each="genre : ${genreList}">
+                <td>
+                  <form th:action="@{/search}">
+                    <input type="hidden" id="genreInput" name="genreId" th:value="${genre.id}" />
+                    <input type="submit" th:value="${genre.name}">
+                  </form>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
     </div>
-    <div th:if="${genreList != null}">
-      <h1>Genre:</h1>
-      <table>
-        <tr th:each="genre : ${genreList}">
-          <td>
-            <form th:action="@{/search}">
-              <input type="hidden" id="genreInput" name="genreId" th:value="${genre.id}"/>
-              <input type="submit" th:value="${genre.name}">
-            </form>
-          </td>
+    <div style="padding-top: 50px;">
+      <table class="table table-dark">
+        <tr>
+          <td><font>Title</font></td>
+          <td><font>Album</font></td>
+          <td><font>Genre</font></td>
+          <td><font>Artist</font></td>
+          <td><font>Add to Cart</font></td>
+        </tr>
+        <tr th:each="song : ${songList}">
+          <td th:text="${song.name}"></td>
+          <td th:text="${song.album.name}"></td>
+          <td th:text="${song.genre.name}"></td>
+          <td th:text="${song.artist.name}"></td>
+          <td><button value=${song.id}>Add</button></td>
         </tr>
       </table>
     </div>
-  </div>
-  <div>
-    <table>
-      <tr>
-        <td>Title</td>
-        <td>Album</td>
-        <td>Genre</td>
-        <td>Artist</td>
-        <td>Add to Cart</td>
-      </tr>
-      <tr th:each="song : ${songList}">
-        <td th:text="${song.name}"></td>
-        <td th:text="${song.album.name}"></td>
-        <td th:text="${song.genre.name}"></td>
-        <td th:text="${song.artist.name}"></td>
-        <td><button value=${song.id}>Add</button></td>
-      </tr>
-    </table>
-  </div>
-</main>
 </body>
+
 </html>
