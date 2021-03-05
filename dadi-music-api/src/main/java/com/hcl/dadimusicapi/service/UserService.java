@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.hcl.dadimusicapi.exception.InvalidDataException;
 import com.hcl.dadimusicapi.exception.NotFoundException;
+import com.hcl.dadimusicapi.model.Song;
 import com.hcl.dadimusicapi.model.User;
 import com.hcl.dadimusicapi.repo.UserRepo;
 
@@ -37,7 +38,13 @@ public class UserService {
     }
     return userRepository.save(user);
   }
-
+  public User update(User user) {
+		if (!userRepository.existsById(user.getId())) {
+			throw new NotFoundException("Cannot update user as user does not exist!");
+		}
+		log.debug("Updating user: " + user);
+		return userRepository.save(user);
+	}
   public Boolean usernameTaken(String username) {
     log.debug("Checking if username is taken: " + username);
     return this.userRepository.existsByUsername(username);

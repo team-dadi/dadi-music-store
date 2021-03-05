@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import com.hcl.dadimusicwebapp.model.Cart;
+import com.hcl.dadimusicwebapp.model.Song;
 import com.hcl.dadimusicwebapp.model.User;
 
 @Service
@@ -23,6 +24,8 @@ public class UserService {
 	private String addUrl;
 	@Value("${apiUrl.user.usernameTaken}")
 	private String usernameTakenUrl;
+	@Value("${apiUrl.user.update}")
+	private String updateUrl;
 
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncorder;
@@ -55,7 +58,10 @@ public class UserService {
 
 		return restTemplate.postForObject(addUrl, user, User.class);
 	}
-
+	public void update(User user) {
+	    log.debug("Sending put request to: " + updateUrl);
+	    restTemplate.put(updateUrl, user);
+	  }
 	public Boolean usernameExists(String username) {
 		log.debug(
 				"Sending get request to " + usernameTakenUrl + username + " to check if username exists: " + username);

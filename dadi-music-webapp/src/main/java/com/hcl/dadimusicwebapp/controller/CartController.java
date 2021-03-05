@@ -232,7 +232,7 @@ public class CartController {
 			invoice.setId(addedInvoice.getId());
 			User user = userService.findByUsername(username);
 			user.getInvoices().add(invoice);
-			userService.addUser(user);
+			userService.update(user);
 			Cart cart=new Cart();
 			cart.setId(id);
 			cart.setSongs(new ArrayList <Song>());
