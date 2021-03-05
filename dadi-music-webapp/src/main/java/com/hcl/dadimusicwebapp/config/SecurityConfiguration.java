@@ -27,8 +27,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
   @Override
   protected void configure(HttpSecurity http) throws Exception {
-    http
-      .authorizeRequests()
+    http.
+       csrf().disable().authorizeRequests()
       .antMatchers("/", "/search**", "/cart", "/register", "/add/**", "/delete/**","/images/**","/register","/checkout").permitAll()
       .antMatchers("/admin/**","/add-genre","/add-album","/add-artist","/add-song").hasRole("ADMIN")
       .anyRequest().authenticated()
@@ -37,7 +37,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
       .loginPage("/login")
       .permitAll()
       .and()
-      .logout().invalidateHttpSession(true)
+      .logout().logoutUrl("/logout").logoutSuccessUrl("/").invalidateHttpSession(true)
       .clearAuthentication(true);
 
     /*
