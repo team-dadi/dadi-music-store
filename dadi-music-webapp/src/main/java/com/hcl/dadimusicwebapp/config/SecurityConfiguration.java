@@ -37,9 +37,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
       .loginPage("/login")
       .permitAll()
       .and()
-      .logout().logoutSuccessUrl("/").invalidateHttpSession(true)
-      .clearAuthentication(true)
-      .permitAll();
+      .logout().invalidateHttpSession(true)
+      .clearAuthentication(true);
 
     /*
      * .loginProcessingUrl("/welcome") //change as per login form mappin
