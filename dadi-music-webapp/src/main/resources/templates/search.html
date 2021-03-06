@@ -10,6 +10,11 @@
   function artistSearch() {
     document.getElementById("searchInput").setAttribute("name", "artistName")
   }
+  function addToCart(songId) {
+    document.getElementById(songId).disabled = true;
+    document.getElementById(songId).innerHTML = "Added";
+    fetch(window.location.origin + "/add/" + songId);
+  }
 </script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -18,7 +23,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-<title id="pageTitle">Search Page</title>
+<title id="pageTitle">Search</title>
 
 <style>
   font {
@@ -31,25 +36,32 @@
 <body class="text-left" style="background-color: #333333;">
   <div class="container-fluid" style="background-color: #33FFBB;">
       <div class="text-center" style="margin-bottom: 5px; padding-top: 10px; padding-bottom: 10px;">
-          <h1>Search A SONG Page</h1>
+          <h1>DADI Music Store</h1>
       </div>
   </div>
   <div>
       <nav class="navbar navbar-expand-sm bg-secondary navbar-dark">
           <ul class="navbar-nav">
               <li class="nav-item active">
-                  <a class="nav-link" href="/home">Search</a>
+                  <a class="nav-link" href="/search">Search</a>
               </li>
-              <li class="nav-item">
-                  <a class="nav-link" href="/login">Login</a>
-              </li>
+              <div sec:authorize="isAnonymous()">
+                <li class="nav-item">
+                    <a class="nav-link" href="/login">Login</a>
+                </li>
+                </div>
+                <div sec:authorize="isAuthenticated()">
+                <li class="nav-item">
+                    <a class="nav-link" href="/logout">Log Out</a>
+                </li>
+                </div>
               <li class="nav-item">
                   <a class="nav-link" href="/cart">Cart</a>
               </li>
           </ul>
       </nav>
   </div>
-    <h1 class="mb-3 text-center"><font>Music Search Page</font></h1>
+    <h1 class="mb-3 text-center"><font>Search for Songs</font></h1>
     <div class="container">
       <div class="row">
         <div class="col">
@@ -65,8 +77,8 @@
           <div th:if="${genreList != null}">
             <label><font>Genre:</font></label>
             <table>
-              <tr th:each="genre : ${genreList}">
-                <td>
+              <tr >
+                <td th:each="genre : ${genreList}">
                   <form th:action="@{/search}">
                     <input type="hidden" id="genreInput" name="genreId" th:value="${genre.id}" />
                     <input type="submit" th:value="${genre.name}">
@@ -79,20 +91,20 @@
       </div>
     </div>
     <div style="padding-top: 50px;">
-      <table class="table table-dark">
+      <table class="table table-dark" style="padding-left: 50px; padding-right: 50px;">
         <tr>
-          <td><font>Title</font></td>
-          <td><font>Album</font></td>
-          <td><font>Genre</font></td>
-          <td><font>Artist</font></td>
-          <td><font>Add to Cart</font></td>
+          <th><font>Title</font></th>
+          <th><font>Album</font></th>
+          <th><font>Genre</font></th>
+          <th><font>Artist</font></th>
+          <th><font>Add to Cart</font></th>
         </tr>
         <tr th:each="song : ${songList}">
           <td th:text="${song.name}"></td>
           <td th:text="${song.album.name}"></td>
           <td th:text="${song.genre.name}"></td>
           <td th:text="${song.artist.name}"></td>
-          <td><button value=${song.id}>Add</button></td>
+          <td><button th:value=${song.id} th:onclick="addToCart([[${song.id}]])" th:id="${song.id}">Add</button></td>
         </tr>
       </table>
     </div>

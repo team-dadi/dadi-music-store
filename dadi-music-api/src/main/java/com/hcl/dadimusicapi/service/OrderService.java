@@ -6,9 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.hcl.dadimusicapi.exception.NotFoundException;
-import com.hcl.dadimusicapi.model.Artist;
-import com.hcl.dadimusicapi.model.Order;
-import com.hcl.dadimusicapi.repo.ArtistRepo;
+import com.hcl.dadimusicapi.model.Invoice;
 import com.hcl.dadimusicapi.repo.OrderRepo;
 
 import lombok.extern.log4j.Log4j2;
@@ -18,27 +16,27 @@ public class OrderService {
 	 @Autowired
 	  private OrderRepo orderRepo;
 
-	  public List<Order> getAll() {
+	  public List<Invoice> getAll() {
 	    log.debug("Getting all orders");
 	    return orderRepo.findAll();
 	  }
 
-	  public Order findById(int id) {
+	  public Invoice findById(int id) {
 	    log.debug("Finding order with id: " + id);
 	    return orderRepo.findById(id).orElseThrow(() -> new NotFoundException("Order not found!"));
 	  }
 
-	  public Order add(Order order) {
-	    log.debug("Adding order: " + order);
-	    return orderRepo.save(order);
+	  public Invoice add(Invoice invoice) {
+	    log.debug("Adding order: " + invoice);
+	    return orderRepo.save(invoice);
 	  }
 
-	  public Order update(Order order) {
-	    if(!orderRepo.existsById(order.getId())) {
+	  public Invoice update(Invoice invoice) {
+	    if(!orderRepo.existsById(invoice.getId())) {
 	      throw new NotFoundException("Cannot update order as order does not exist!");
 	    }
-	    log.debug("Updating order: " + order);
-	    return orderRepo.save(order);
+	    log.debug("Updating order: " + invoice);
+	    return orderRepo.save(invoice);
 	  }
 
 	  public void delete(int id) {

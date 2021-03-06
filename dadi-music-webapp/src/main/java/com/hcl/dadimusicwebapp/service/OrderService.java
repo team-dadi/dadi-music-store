@@ -9,7 +9,7 @@ import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.hcl.dadimusicwebapp.model.Order;
+import com.hcl.dadimusicwebapp.model.Invoice;
 
 import lombok.extern.log4j.Log4j2;
 
@@ -21,28 +21,28 @@ public class OrderService {
 	@Autowired
 	private RestTemplate restTemplate;
 
-	public List<Order> getAll(){
+	public List<Invoice> getAll(){
 		String getAllUrl = url+"/all";
 		log.debug("Sending get request to: "+ getAllUrl);
-		List<Order> orderList = new ObjectMapper().convertValue(
+		List<Invoice> invoiceList = new ObjectMapper().convertValue(
 			restTemplate.getForObject(getAllUrl, List.class),
-			new TypeReference<List<Order>>() { });
-		return orderList;
+			new TypeReference<List<Invoice>>() { });
+		return invoiceList;
 	}
-	public Order getById(int id) {
+	public Invoice getById(int id) {
 	    String getUrl = url + "/" + id;
 	    log.debug("Sending get request to: " + getUrl);
-	    return restTemplate.getForObject(getUrl, Order.class);
+	    return restTemplate.getForObject(getUrl, Invoice.class);
 	  }
 
-	  public Order add(Order order) {
+	  public Invoice add(Invoice invoice) {
 	    log.debug("Sending post request to: " + url);
-	    return restTemplate.postForObject(url, order, Order.class);
+	    return restTemplate.postForObject(url, invoice, Invoice.class);
 	  }
 
-	  public void update(Order order) {
+	  public void update(Invoice invoice) {
 	    log.debug("Sending put request to: " + url);
-	    restTemplate.put(url, order);
+	    restTemplate.put(url, invoice);
 	  }
 
 	  public void delete(int id) {

@@ -11,6 +11,12 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
+    <style>
+        .carousel {
+            max-width: 400px;
+            margin: 0 auto;
+            }
+    </style>
 </head>
 
 <body class="text-left" style="background-color: #333333;">
@@ -25,9 +31,16 @@
                 <li class="nav-item active">
                     <a class="nav-link" href="/search">Search</a>
                 </li>
+                <div sec:authorize="isAnonymous()">
                 <li class="nav-item">
                     <a class="nav-link" href="/login">Login</a>
                 </li>
+                </div>
+                <div sec:authorize="isAuthenticated()">
+                <li class="nav-item">
+                    <a class="nav-link" href="/logout">Log Out</a>
+                </li>
+                </div>
                 <li class="nav-item">
                     <a class="nav-link" href="/cart">Cart</a>
                 </li>
@@ -52,23 +65,23 @@
                     </ol>
                     <div class="carousel-inner;">
                         <div class="carousel-item active">
-                            <a href="/search/genre/5"><img class="d-block w-100" style="height: 50%; width: 50%; "
+                            <a href="/search?genreId=5"><img class="d-block w-100" style="height: 50%; width: 50%; "
                                     th:src="@{images/popIMG.png}" alt="First slide"></a>
                         </div>
                         <div class="carousel-item">
-                            <a href="/search/genre/1"><img class="d-block w-100" style="height: 50%; width: 50%;"
+                            <a href="/search?genreId=1"><img class="d-block w-100" style="height: 50%; width: 50%;"
                                     th:src="@{images/countryIMG.jpg}" alt="Second slide"></a>
                         </div>
                         <div class="carousel-item">
-                            <a href="/search/genre/4"><img class="d-block w-100" style="height: 50%; width: 50%;"
+                            <a href="/search?genreId=4"><img class="d-block w-100" style="height: 50%; width: 50%;"
                                     th:src="@{images/classicalIMG.jpg}" alt="Third slide"></a>
                         </div>
                         <div class="carousel-item">
-                            <a href="/search/genre/3"><img class="d-block w-100" style="height: 50%; width: 50%;"
+                            <a href="/search?genreId=3"><img class="d-block w-100" style="height: 50%; width: 50%;"
                                     th:src="@{images/edmIMG.jpg}" alt="Third slide"></a>
                         </div>
                         <div class="carousel-item">
-                            <a href="/search/genre/2"><img class="d-block w-100" style="height: 50%; width: 50%;"
+                            <a href="/search?genreId=2"><img class="d-block w-100" style="height: 50%; width: 50%;"
                                     th:src="@{images/hipHopIMG.png}" alt="Third slide"></a>
                         </div>
                     </div>
@@ -84,8 +97,6 @@
             </div>
         </div>
     </div>
-
-
 </body>
 
 </html>

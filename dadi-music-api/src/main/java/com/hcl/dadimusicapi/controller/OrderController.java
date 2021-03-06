@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.hcl.dadimusicapi.model.Order;
+import com.hcl.dadimusicapi.model.Invoice;
 import com.hcl.dadimusicapi.service.OrderService;
 
 import io.swagger.annotations.ApiOperation;
@@ -28,20 +28,20 @@ public class OrderController {
 
 	@ApiOperation(value = "Get all orders", response = List.class)
 	@GetMapping("/all")
-	public List<Order> getAll() {
+	public List<Invoice> getAll() {
 		return orderService.getAll();
 	}
 
-	@ApiOperation(value = "Get order by id", response = Order.class)
+	@ApiOperation(value = "Get order by id", response = Invoice.class)
 	@GetMapping("/{id}")
-	public Order get(@PathVariable int id) {
+	public Invoice get(@PathVariable int id) {
 		return orderService.findById(id);
 	}
 
-	@ApiOperation(value = "Add order", response = Order.class)
+	@ApiOperation(value = "Add order", response = Invoice.class)
 	@PostMapping
-	public Order add(@RequestBody Order order) {
-		return orderService.add(order);
+	public Invoice add(@RequestBody Invoice invoice) {
+		return orderService.add(invoice);
 	}
 
 	@ApiOperation(value = "Delete order")
@@ -51,10 +51,10 @@ public class OrderController {
 		return new ResponseEntity<String>("Order deleted successfully", HttpStatus.OK);
 	}
 
-	@ApiOperation(value = "Update order", response = Order.class)
+	@ApiOperation(value = "Update order", response = Invoice.class)
 	@PutMapping
-	public Order update(@RequestBody Order order) {
-		return orderService.update(order);
+	public Invoice update(@RequestBody Invoice invoice) {
+		return orderService.update(invoice);
 	}
 
 }

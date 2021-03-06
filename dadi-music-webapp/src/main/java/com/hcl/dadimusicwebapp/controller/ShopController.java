@@ -38,7 +38,11 @@ public class ShopController {
     model.addAttribute("genreList", genreService.getAll());
     return "home";
   }
+  @GetMapping("/logout")
+	public String logout() {
+		 return "redirect:/";
 
+	}
   @GetMapping("/search")
   public String searchByAlbum(@RequestParam(required = false) String albumName,
                               @RequestParam(required = false) String artistName,

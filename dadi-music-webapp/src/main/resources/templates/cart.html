@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+  function deleteFromCart(songId) {
+    document.getElementById(songId).remove();
+    fetch(window.location.origin + "/delete/" + songId);
+  }
+</script>
+<title id="pageTitle">Cart</title>
+
+<style>
+  font {
+    color: white;
+  }
+</style>
+
+</head>
+
+<body class="text-left" style="background-color: #333333;">
+<div class="container-fluid" style="background-color: #33FFBB;">
+  <div class="text-center" style="margin-bottom: 5px; padding-top: 10px; padding-bottom: 10px;">
+    <h1>DADI Music Store</h1>
+  </div>
+</div>
+<div>
+  <nav class="navbar navbar-expand-sm bg-secondary navbar-dark">
+    <ul class="navbar-nav">
+      <li class="nav-item active">
+        <a class="nav-link" href="/search">Search</a>
+      </li>
+      <div sec:authorize="isAnonymous()">
+        <li class="nav-item">
+          <a class="nav-link" href="/login">Login</a>
+        </li>
+      </div>
+      <div sec:authorize="isAuthenticated()">
+         <li class="nav-item">
+             <a class="nav-link" href="/logout">Log Out</a>
+         </li>
+      </div>
+      <li class="nav-item">
+        <a class="nav-link" href="/cart">Cart</a>
+      </li>
+    </ul>
+  </nav>
+</div>
+<h1 class="mb-3 text-center"><font>Cart</font></h1>
+<div class="container">
+  <div class="row">
+    <div class="col">
+
+    </div>
+    <div class="col">
+
+    </div>
+  </div>
+</div>
+<div style="padding-top: 50px;">
+  <p th:text="${cartAlert}" class="mb-3" style="color:red;"></p>
+  <table class="table table-dark" style="padding-left: 50px; padding-right: 50px;">
+    <tr>
+      <td><font>Title</font></td>
+      <td><font>Album</font></td>
+      <td><font>Genre</font></td>
+      <td><font>Artist</font></td>
+      <td><font>Remove</font></td>
+    </tr>
+    <tr th:each="song : ${songList}" th:id="${song.id}">
+      <td th:text="${song.name}"></td>
+      <td th:text="${song.album.name}"></td>
+      <td th:text="${song.genre.name}"></td>
+      <td th:text="${song.artist.name}"></td>
+      <td>
+        <button th:value=${song.id} th:onclick="deleteFromCart([[${song.id}]])">Delete</button>
+      </td>
+    </tr>
+  </table>
+  <div class="d-flex justify-content-center">
+    <a class="btn btn-outline-warning btn-lg align-center" href="/checkout" role="button">Checkout</a>
+  </div>
+</div>
+</body>
+
+</html>

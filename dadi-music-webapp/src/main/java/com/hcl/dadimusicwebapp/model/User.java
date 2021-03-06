@@ -15,6 +15,6 @@ public class User {
     private String password;
     private String email;
     Cart cart;
-    List<Order> orders;
+    List<Invoice> invoices;
    
 }

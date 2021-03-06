@@ -29,7 +29,7 @@
         <nav class="navbar navbar-expand-sm bg-secondary navbar-dark">
             <ul class="navbar-nav">
                 <li class="nav-item active">
-                    <a class="nav-link" href="/home">Home</a>
+                    <a class="nav-link" href="/">Home</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/search">Search</a>
@@ -46,41 +46,51 @@
     <div class="container">
         <div class="row">
             <div class="col-md">
+            	<label for="error" id="error"></label>
+            	
+            <form th:action="@{/add-genre}" method="post">
                 <label for="genreInput">Enter New Genre</label>
-                <input type="text" id="genreInput">
+                <input type="text" id="genreInput" name="genreInput" required>
                 <button>Add Genre</button>
                 <br>
-
+               </form>
+                
+                <form th:action="@{/add-album}" method="post">
                 <label for="Album">Enter New Album</label>
-                <input type="text" id="albumInput">
+                <input type="text" id="albumInput" name="albumInput" required>
                 <button>Add Album</button>
                 <br>
-
+                </form>
+                
+                <form th:action="@{/add-artist}" method="post">
                 <label for="Artist">Enter New Artist</label>
-                <input type="text" id="artistInput">
+                <input type="text" id="artistInput" name="artistInput" required>
                 <button>Add Artist</button>
                 <br>
+                </form>
             </div>
             <div class="col-md">
-                <label for="genreInput">Add A New Song</label> <br>
-                <input type="text" id="genreInput">
-                <select th:field="*{albumList}">
+            	<form th:action="@{add-song}" method="post" >
+                <label for="songTitleInput">Add A New Song</label> <br>
+                <input type="text" id="songTitleInput" name="songTitleInput" required>
+                <select id="album" name="album">
                     <option value="">Select Album</option>
-                    <option th:each="country : ${albumList}" th:value="${alum.id}" th:text="${album.name}"></option>
+                    <option th:each="album : ${albumList}" th:value="${album.id}" th:text="${album.name}" ></option>
                 </select>
-                <select th:field="*{artistList}">
+                <select id="artist" name="artist">
                     <option value="">Select Artist</option>
-                    <option th:each="country : ${artistList}" th:value="${artist.id}" th:text="${artist.name}"></option>
+                    <option th:each="artist : ${artistList}" th:value="${artist.id}" th:text="${artist.name}" ></option>
                 </select>
-                <select th:field="*{genreList}">
+                <select id="genre" name="genre">
                     <option value="">Select Genre</option>
-                    <option th:each="country : ${genreList}" th:value="${genre.id}" th:text="${genre.name}"></option>
+                    <option th:each="genre : ${genreList}" th:value="${genre.id}" th:text="${genre.name}"></option>
                 </select>
-                <button>Add Song</button>
+                <div>
+                	<button>Add Song</button>
+                </div>
+                </form>
             </div>
         </div>
-
-    </div>
     </div>
 </body>
 
